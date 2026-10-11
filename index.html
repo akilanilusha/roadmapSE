@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Software Engineer Interview Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EAF0F6; --paper:#FFFFFF; --ink:#13213A; --ink-2:#4A5A74; --line:#C9D4E2;
+  --route:#2453E0; --done:#16946A; --signal:#F2B705; --soft:#DCE6F3;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1726; --paper:#172238; --ink:#E8EEF7; --ink-2:#9AAAC2; --line:#2B3A55;
+    --route:#6E93FF; --done:#3CC796; --signal:#F5C531; --soft:#1E2B45;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1726; --paper:#172238; --ink:#E8EEF7; --ink-2:#9AAAC2; --line:#2B3A55;
+  --route:#6E93FF; --done:#3CC796; --signal:#F5C531; --soft:#1E2B45;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:1rem;line-height:1.55}
+.wrap{max-width:860px;margin:0 auto;padding:2.5rem 1.25rem 4rem}
+h1,h2,h3{font-family:"Bricolage Grotesque","IBM Plex Sans",system-ui,sans-serif;line-height:1.1;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px;border-radius:6px}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;margin-bottom:2rem}
+.hero h1{font-size:clamp(2.2rem,6vw,3.6rem);font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--ink-2);max-width:52ch;margin:.9rem 0 0}
+.gauge{width:128px;height:128px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(var(--done) calc(var(--p,0)*1%),var(--soft) 0)}
+.gauge div{width:100px;height:100px;border-radius:50%;background:var(--bg);display:grid;place-items:center;text-align:center}
+.gauge strong{font-family:"Bricolage Grotesque",sans-serif;font-size:1.8rem;display:block;line-height:1}
+.gauge span{font-size:.78rem;color:var(--ink-2)}
+
+.next{background:var(--ink);color:var(--bg);border-radius:14px;padding:1rem 1.25rem;display:flex;gap:1rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:1.25rem}
+.next small{opacity:.75;display:block}
+.next b{font-weight:600}
+.next button{background:var(--signal);color:#13213A;border:0;border-radius:999px;padding:.55rem 1.1rem;font-weight:600}
+
+.notes{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:2.75rem}
+.note{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem}
+.note h3{font-size:1.1rem;margin-bottom:.45rem}
+.note p,.note li{color:var(--ink-2);font-size:.93rem;margin:0}
+.note ul{margin:.3rem 0 0;padding-left:1.1rem}
+.note.warn{border-left:5px solid var(--signal)}
+
+/* Route */
+.route-title{font-size:1.6rem;margin-bottom:.4rem}
+.route-sub{color:var(--ink-2);margin:0 0 1.5rem}
+.route{position:relative;list-style:none;margin:0;padding:0}
+.route::before{content:"";position:absolute;left:23px;top:24px;bottom:24px;width:6px;border-radius:3px;background:var(--route);opacity:.9}
+.stop{position:relative;padding-left:72px;margin-bottom:1.1rem}
+.station{position:absolute;left:0;top:6px;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;
+  background:conic-gradient(var(--done) calc(var(--p,0)*1%),var(--line) 0)}
+.station span{width:40px;height:40px;border-radius:50%;background:var(--paper);display:grid;place-items:center;
+  font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:1.15rem}
+.stop.complete .station span{background:var(--done);color:#fff}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.head{width:100%;background:none;border:0;text-align:left;padding:1rem 1.25rem;display:grid;grid-template-columns:1fr auto;gap:.25rem 1rem;align-items:center}
+.head h2{font-size:1.3rem;font-weight:700}
+.when{font-size:.85rem;color:var(--route);font-weight:600}
+.goal{grid-column:1/-1;color:var(--ink-2);font-size:.93rem}
+.count{font-size:.85rem;color:var(--ink-2);white-space:nowrap}
+.chev{display:inline-block;transition:transform .2s;margin-left:.4rem}
+.stop.open .chev{transform:rotate(180deg)}
+.body{display:none;padding:0 1.25rem 1.25rem;border-top:1px solid var(--line)}
+.stop.open .body{display:block}
+.group{margin-top:1rem}
+.group h3{font-size:.98rem;margin-bottom:.4rem;font-family:"IBM Plex Sans",sans-serif;font-weight:600}
+.item{display:flex;gap:.7rem;align-items:flex-start;padding:.45rem .5rem;border-radius:8px;cursor:pointer}
+.item:hover{background:var(--soft)}
+.item input{appearance:none;flex:0 0 20px;width:20px;height:20px;margin:.15rem 0 0;border:2px solid var(--ink-2);border-radius:6px;display:grid;place-items:center;cursor:pointer;background:var(--paper)}
+.item input:checked{background:var(--done);border-color:var(--done)}
+.item input:checked::after{content:"";width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.item input:checked + span{color:var(--ink-2);text-decoration:line-through;text-decoration-color:var(--line)}
+.item.flash{background:color-mix(in srgb,var(--signal) 30%,transparent)}
+.output{margin-top:1rem;background:var(--soft);border-radius:10px;padding:.8rem 1rem;font-size:.93rem}
+.output b{display:block;margin-bottom:.15rem}
+
+/* Daily track */
+.daily{margin-top:2.75rem;background:var(--paper);border:2px dashed var(--route);border-radius:16px;padding:1.25rem}
+.daily h2{font-size:1.4rem}
+.daily > p{color:var(--ink-2);margin:.4rem 0 .8rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:.4rem .85rem .4rem .55rem;display:flex;gap:.45rem;align-items:center;font-size:.92rem}
+.chip.on{background:var(--done);border-color:var(--done);color:#fff}
+.chip i{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;display:inline-block;font-style:normal}
+.chip.on i{background:#fff;border-color:#fff}
+.plan{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:1.1rem}
+.plan div{background:var(--soft);border-radius:10px;padding:.75rem .9rem;font-size:.9rem}
+.plan b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:1.25rem}
+
+footer{margin-top:2.5rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;color:var(--ink-2);font-size:.88rem}
+footer button{background:none;border:1px solid var(--line);border-radius:999px;padding:.45rem 1rem}
+
+@media (max-width:640px){
+  .hero{grid-template-columns:1fr}
+  .gauge{width:104px;height:104px}.gauge div{width:80px;height:80px}.gauge strong{font-size:1.4rem}
+  .notes,.plan{grid-template-columns:1fr}
+  .stop{padding-left:58px}
+  .route::before{left:18px}
+  .station{width:42px;height:42px}.station span{width:32px;height:32px;font-size:1rem}
+  .head{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <h1>Your route to a software engineer offer</h1>
+      <p>Eight stops over about 12 weeks, built around your own CV: .NET and React at work, Spring Boot in Tripgenix, and the projects you can talk about with confidence. Tick topics as you master them — your progress is saved in this browser.</p>
+    </div>
+    <div class="gauge" id="gauge" role="img" aria-label="Overall progress"><div><strong id="pct">0%</strong><span id="pctTxt">0 of 0</span></div></div>
+  </header>
+
+  <div class="next" id="next">
+    <div><small>Next up</small><b id="nextTxt">—</b></div>
+    <button id="nextBtn" type="button">Go to topic</button>
+  </div>
+
+  <section class="notes">
+    <div class="note warn">
+      <h3>Fix this before any interview</h3>
+      <p>Your CV says "2+ years", but your timeline shows NBiT from Oct 2022 and Creative Software from Apr 2026. Prepare one clear, honest answer to "How many years of professional experience do you have?" that matches your CV exactly.</p>
+    </div>
+    <div class="note">
+      <h3>How to study each topic</h3>
+      <ul>
+        <li>Learn the concept, then explain it out loud in 2 minutes.</li>
+        <li>Link it to something you built (BookNordics, Xtranet, Tripgenix).</li>
+        <li>Ask your AI coach to quiz you before you tick it off.</li>
+      </ul>
+    </div>
+  </section>
+
+  <h2 class="route-title">The route</h2>
+  <p class="route-sub">Go in order — each stop builds on the one before. Tap a stop to open its checklist.</p>
+  <ol class="route" id="route"></ol>
+
+  <section class="daily" id="daily">
+    <h2>Daily track: coding &amp; DSA</h2>
+    <p>Runs alongside every stop from week 2. Solve 1–2 problems a day and always say your approach out loud before coding, then state the Big-O.</p>
+    <div class="chips" id="chips"></div>
+    <div class="plan">
+      <div><b>60 min</b>Current stop's topics</div>
+      <div><b>45 min</b>One DSA problem, explained aloud</div>
+      <div><b>15 min</b>Rehearse one CV story</div>
+    </div>
+  </section>
+
+  <footer>
+    <span>Adjust the weeks to your pace — finishing matters more than speed.</span>
+    <button id="reset" type="button">Reset progress</button>
+  </footer>
+</div>
+
+<script>
+const PHASES = [
+  { title:"Your story", when:"Week 1", goal:"Own your CV so every answer sounds natural and consistent.",
+    groups:[
+      ["Prepare answers",["Tell me about yourself (60–90 seconds)","Explain your current role at Creative Software","Why are you looking for a new role?","How many years of experience do you have? (consistent with CV)"]],
+      ["Project stories from your CV",["Walk through BookNordics: problem, stack, your part","Walk through Xtranet: problem, stack, your part","Walk through Tripgenix: Spring Boot microservices","Your responsibilities vs. the team's"]],
+      ["STAR stories",["Biggest technical challenge","A bug you solved","Code review experience (giving and receiving)","Agile / Scrum: sprints, stand-ups, estimation"]]
+    ],
+    output:"A recorded 90-second intro and five STAR stories written down." },
+  { title:"Core programming", when:"Weeks 2–3", goal:"Solid fundamentals in C# and Java that every later topic depends on.",
+    groups:[
+      ["Concepts",["OOP: encapsulation, inheritance, polymorphism, abstraction","SOLID principles with real examples","Interfaces vs. abstract classes","Big-O notation"]],
+      ["C#",["Value vs. reference types","Generics and collections","LINQ basics","Async / await and Tasks"]],
+      ["Java",["Collections (List, Set, Map)","Streams API","Exception handling (checked vs. unchecked)","Multithreading basics"]]
+    ],
+    output:"Explain each SOLID principle using code from one of your own projects." },
+  { title:"Backend", when:"Weeks 4–5", goal:"Explain how your APIs work end to end in both .NET and Spring Boot.",
+    groups:[
+      ["ASP.NET Core",["Middleware pipeline","Dependency Injection and service lifetimes","Entity Framework Core and LINQ queries","Global exception handling","Repository and Service patterns"]],
+      ["Spring Boot",["Controllers, Services, Repositories","Dependency Injection in Spring","JPA / Hibernate","@Transactional and transactions","Spring Security"]],
+      ["Shared",["Authentication vs. Authorization","JWT: structure, flow, refresh tokens","REST design: verbs, status codes, versioning, validation"]]
+    ],
+    output:"Build a small CRUD API with JWT auth in ASP.NET Core, then mirror one endpoint in Spring Boot." },
+  { title:"Frontend", when:"Week 6", goal:"Confidently back up the React + TypeScript claim on your CV.",
+    groups:[
+      ["React",["Components and component architecture","Props vs. state","Hooks: useState, useMemo, useCallback, useRef","useEffect: dependencies and cleanup","Context API vs. state management libraries","Form handling and validation"]],
+      ["TypeScript & integration",["Interfaces vs. types","Typing props, API responses, generics","API integration: loading, error, empty states","Performance: re-renders, memo, lazy loading"]]
+    ],
+    output:"A small React + TypeScript app that consumes the API you built in the Backend stop." },
+  { title:"Database", when:"Week 7", goal:"Write correct SQL fast and design sensible schemas.",
+    groups:[
+      ["SQL",["JOINs (inner, left, right, full)","GROUP BY and HAVING","Subqueries and CTEs","Primary and foreign keys"]],
+      ["Design & performance",["Normalization (1NF–3NF)","Indexes: when they help and hurt","Transactions, ACID, isolation levels","Query optimization and the N+1 problem","SQL vs. NoSQL trade-offs","How EF Core / JPA queries become SQL"]]
+    ],
+    output:"Solve 30 SQL practice questions and design a hotel-booking schema." },
+  { title:"Architecture & system design", when:"Weeks 8–9", goal:"Talk through a design calmly using a repeatable framework.",
+    groups:[
+      ["Architecture",["Clean Architecture layers","Modular monolith","Microservices: benefits and costs","API Gateway and service-to-service communication","Caching, logging and monitoring basics"]],
+      ["Practice designs",["Framework: requirements → API → DB → services → auth → scale → cache → logs → deploy","Hotel booking system","Travel booking platform","Authentication service","Notification service","Product catalog","URL shortener"]]
+    ],
+    output:"Draw and explain one design per session in 35 minutes." },
+  { title:"DevOps & cloud", when:"Week 10", goal:"Describe the pipelines and deployments you actually worked with.",
+    groups:[
+      ["Tools",["Git: branching, PRs, merge vs. rebase","GitHub / GitLab workflows","Azure DevOps pipelines","Docker: Dockerfile, images, containers, compose","Helm basics"]],
+      ["Practices",["CI/CD stages","Environment configuration and secrets","Azure services you used","Deployment strategies: rolling, blue-green, canary"]]
+    ],
+    output:"Dockerize your sample API and add a CI pipeline that builds and tests it." },
+  { title:"Mock interviews", when:"Weeks 11–12", goal:"Rehearse under real conditions until it feels routine.",
+    groups:[
+      ["Rounds",["Technical Q&A round","Coding round (45 min, think aloud)","System design round","HR round","Full mock interview loop","Review weak spots and redo them"]]
+    ],
+    output:"Two full mock interviews per week, with notes on what to improve." }
+];
+const DSA = ["Arrays","Strings","HashMaps","Stack & Queue","Linked lists","Trees","Searching","Sorting","Recursion","Big-O analysis","Basic dynamic programming","Explaining solutions aloud"];
+
+const KEY = "se-roadmap-v1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ state = {}; }
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} };
+
+const route = document.getElementById("route");
+PHASES.forEach((ph, pi) => {
+  const li = document.createElement("li");
+  li.className = "stop"; li.id = "stop-"+pi;
+  let html = `<div class="station"><span>${pi+1}</span></div><div class="card">
+    <button class="head" type="button" aria-expanded="false" aria-controls="body-${pi}">
+      <h2>${ph.title}</h2><span class="count"><span id="c-${pi}"></span><span class="chev" aria-hidden="true">▾</span></span>
+      <span class="when">${ph.when}</span>
+      <span class="goal">${ph.goal}</span>
+    </button><div class="body" id="body-${pi}">`;
+  ph.groups.forEach((g, gi) => {
+    html += `<div class="group"><h3>${g[0]}</h3>`;
+    g[1].forEach((t, ti) => {
+      const id = `p${pi}-${gi}-${ti}`;
+      html += `<label class="item" id="it-${id}"><input type="checkbox" data-id="${id}" ${state[id]?"checked":""}><span>${t}</span></label>`;
+    });
+    html += `</div>`;
+  });
+  html += `<div class="output"><b>Finish this stop with</b>${ph.output}</div></div></div>`;
+  li.innerHTML = html;
+  route.appendChild(li);
+  li.querySelector(".head").addEventListener("click", e => toggle(pi));
+});
+
+const chips = document.getElementById("chips");
+DSA.forEach((d, i) => {
+  const id = "dsa-"+i;
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"+(state[id]?" on":"");
+  b.setAttribute("aria-pressed", !!state[id]);
+  b.innerHTML = `<i aria-hidden="true"></i>${d}`;
+  b.addEventListener("click", () => {
+    state[id] = !state[id]; b.classList.toggle("on", state[id]); b.setAttribute("aria-pressed", state[id]);
+    save(); update();
+  });
+  chips.appendChild(b);
+});
+
+function toggle(pi, force){
+  const li = document.getElementById("stop-"+pi);
+  const open = force ?? !li.classList.contains("open");
+  li.classList.toggle("open", open);
+  li.querySelector(".head").setAttribute("aria-expanded", open);
+}
+
+route.addEventListener("change", e => {
+  if (e.target.matches("input[data-id]")) { state[e.target.dataset.id] = e.target.checked; save(); update(); }
+});
+
+let nextId = null;
+function update(){
+  let total = 0, done = 0; nextId = null; let nextLabel = "";
+  PHASES.forEach((ph, pi) => {
+    let t = 0, d = 0;
+    ph.groups.forEach((g, gi) => g[1].forEach((txt, ti) => {
+      const id = `p${pi}-${gi}-${ti}`; t++;
+      if (state[id]) d++; else if (!nextId) { nextId = id; nextLabel = `Stop ${pi+1} · ${txt}`; }
+    }));
+    total += t; done += d;
+    const li = document.getElementById("stop-"+pi);
+    li.querySelector(".station").style.setProperty("--p", Math.round(d/t*100));
+    li.classList.toggle("complete", d === t);
+    document.getElementById("c-"+pi).textContent = `${d}/${t} done`;
+  });
+  DSA.forEach((_, i) => { total++; if (state["dsa-"+i]) done++; });
+  const p = total ? Math.round(done/total*100) : 0;
+  document.getElementById("gauge").style.setProperty("--p", p);
+  document.getElementById("pct").textContent = p+"%";
+  document.getElementById("pctTxt").textContent = `${done} of ${total}`;
+  document.getElementById("nextTxt").textContent = nextId ? nextLabel.replace(" · ", ": ") : "Every stop is complete. Keep doing mock interviews.";
+  document.getElementById("nextBtn").hidden = !nextId;
+}
+
+document.getElementById("nextBtn").addEventListener("click", () => {
+  if (!nextId) return;
+  const pi = +nextId.split("-")[0].slice(1);
+  toggle(pi, true);
+  const el = document.getElementById("it-"+nextId);
+  el.scrollIntoView({block:"center"});
+  el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1400);
+  el.querySelector("input").focus({preventScroll:true});
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  if (!confirm("Clear all your ticked topics?")) return;
+  state = {}; save();
+  document.querySelectorAll("input[data-id]").forEach(i => i.checked = false);
+  document.querySelectorAll(".chip").forEach(c => { c.classList.remove("on"); c.setAttribute("aria-pressed","false"); });
+  update();
+});
+
+update();
+toggle(0, true);
+</script>
+</body>
+</html>
